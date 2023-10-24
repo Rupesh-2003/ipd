@@ -191,20 +191,20 @@ def get_tickets_by_customer_id(args):
         "data": tickets
     })
 
-# def get_tickets_by_employee(args):
-#     response = EmployeeModel.get_single_employee(args['employee_id'])
-#     if response["error"]:
-#         return response
+def get_tickets_by_employee(args):
+    response = EmployeeModel.get_single_employee(args)
+    if response["error"]:
+        return response
     
-#     employee = response["data"]
+    employee = response["data"]
 
-#     response = TicketModel.get_tickets_by_employee(employee_id=employee['id'])
-#     if response["error"]:
-#         return response
+    response = TicketModel.get_tickets_by_employee(employee_id=employee['id'])
+    if response["error"]:
+        return response
     
-#     tickets = response["data"]
+    tickets = response["data"]
 
-#     return jsonify({
-#         "error": False,
-#         "data": tickets
-#     })
+    return jsonify({
+        "error": False,
+        "data": tickets
+    })
