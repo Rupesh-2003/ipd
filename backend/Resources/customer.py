@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from flask_restful import Resource, reqparse
 from models.customer import Customer as CustomerModel
 
@@ -24,11 +24,14 @@ class Customer(Resource):
         })
     
     def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('mobile', type=str, required=True, help="Mobile is required")
-        args = parser.parse_args()
-
-        response = CustomerModel.get(args["mobile"])
+        mobile = request.args.get('mobile')
+        if not mobile:
+            return jsonify({
+                "error": True,
+                "message": "Mobile is required"
+            })
+        
+        response = CustomerModel.get_customer_by_mobile(mobile=mobile)
         if response["error"]:
             return response
         
